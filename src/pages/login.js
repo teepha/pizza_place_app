@@ -13,6 +13,7 @@ import { login } from "../services/userServices";
 import AuthContext from "../components/Context/AuthContext";
 import Layout from "../components/Layout";
 import useForm from "../components/Hooks/useForm";
+import { setLocalStorageItem } from "../utils/helpers";
 
 const LoginPage = (props) => {
   const { location, history } = props;
@@ -24,8 +25,8 @@ const LoginPage = (props) => {
     setLoading(true);
     await login({ username: values.username, password: values.password })
       .then(({ id, token }) => {
-        localStorage.setItem("customerToken", token);
-        localStorage.setItem("mcustomer", id);
+        setLocalStorageItem("customerToken", token);
+        setLocalStorageItem("mcustomer", id);
         updateToken();
         history.push({
           pathname: "/myaccount",

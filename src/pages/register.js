@@ -14,6 +14,7 @@ import AuthContext from "../components/Context/AuthContext";
 import { register } from "../services/userServices";
 import Layout from "../components/Layout";
 import useForm from "../components/Hooks/useForm";
+import { setLocalStorageItem } from "../utils/helpers";
 
 const Register = ({ location }) => {
   const [loading, setLoading] = useState(false);
@@ -30,8 +31,8 @@ const Register = ({ location }) => {
     })
       .then((data) => {
         const { id, token } = data;
-        localStorage.setItem("customerToken", token);
-        localStorage.setItem("mcustomer", id);
+        setLocalStorageItem("customerToken", token);
+        setLocalStorageItem("mcustomer", id);
         updateToken();
         history.push({
           pathname: "/myaccount",

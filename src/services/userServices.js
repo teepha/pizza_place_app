@@ -1,6 +1,4 @@
-import dotenv from "dotenv";
 import { BASEURL } from "../utils/helpers";
-dotenv.config();
 
 const register = async ({ password, username, name }) =>
   fetch(`${BASEURL}/api/v1/sign-up`, {

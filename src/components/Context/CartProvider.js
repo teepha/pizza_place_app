@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import CartContext from "./CartContext";
 import AuthProvider from "./AuthProvider";
+import { setLocalStorageItem, getLocalStorageItem } from "../../utils/helpers";
 
 const CartProvider = ({ children }) => {
   const [cartId, setCartId] = useState(null);
@@ -8,7 +9,7 @@ const CartProvider = ({ children }) => {
 
   const addToCart = (quantity, cartId) => {
     const cartCountResult = Number(cartCount) + Number(quantity);
-    localStorage.setItem(
+    setLocalStorageItem(
       "mdata",
       JSON.stringify({ cartId, cartCount: cartCountResult })
     );
@@ -16,25 +17,25 @@ const CartProvider = ({ children }) => {
   };
 
   const updateCartCount = (cartCount, cartId) => {
-    localStorage.setItem("mdata", JSON.stringify({ cartId, cartCount }));
+    setLocalStorageItem("mdata", JSON.stringify({ cartId, cartCount }));
     setCartCount(cartCount);
   };
 
   useEffect(() => {
-    const cartId = localStorage.getItem("mcart");
+    const cartId = getLocalStorageItem("mcart");
 
-    const mdata = localStorage.getItem("mdata");
+    const mdata = getLocalStorageItem("mdata");
 
     if ((cartId && !mdata) || !cartId) {
       const cartId = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx".replace(/[x]/g, () =>
         // eslint-disable-next-line no-bitwise
         ((Math.random() * 16) | 0).toString(16)
       );
-      localStorage.setItem("mcart", cartId);
-      localStorage.setItem("mdata", JSON.stringify({ cartId, cartCount: 0 }));
+      setLocalStorageItem("mcart", cartId);
+      setLocalStorageItem("mdata", JSON.stringify({ cartId, cartCount: 0 }));
       setCartId(cartId);
     } else {
-      const data = localStorage.getItem("mdata");
+      const data = getLocalStorageItem("mdata");
       const parsedData = JSON.parse(data);
       setCartCount(parsedData.cartCount || 0);
     }
