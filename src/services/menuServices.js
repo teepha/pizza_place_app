@@ -11,7 +11,7 @@ const getAllMenu = async () =>
     });
 
 const getAMenu = async (id) =>
-  fetch(`http://localhost:9000/api/v1/menu/${id}`)
+  fetch(`${BASEURL}/api/v1/menu/${id}`)
     .then((res) => res.json())
     .then((res) => {
       return res.menu.menu;
