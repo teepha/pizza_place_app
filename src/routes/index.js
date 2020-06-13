@@ -24,6 +24,7 @@ const lazyImport = (filePath) =>
 const Home = lazyImport("home");
 const MenuItem = lazyImport("menuItem");
 const Register = lazyImport("register");
+const LoginPage = lazyImport("login");
 
 export default [
   {
@@ -45,6 +46,14 @@ export default [
     component: Register,
     exact: true,
     path: "/register",
+    authType: "unAuthenticated",
+    redirectTo: "/",
+  },
+  {
+    name: "login",
+    component: LoginPage,
+    exact: true,
+    path: "/logIn",
     authType: "unAuthenticated",
     redirectTo: "/",
   },
