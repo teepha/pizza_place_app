@@ -21,8 +21,8 @@ const lazyImport = (filePath) =>
       })
   );
 
-
 const Home = lazyImport("home");
+const MenuItem = lazyImport("menuItem");
 
 export default [
   {
@@ -30,5 +30,13 @@ export default [
     component: Home,
     exact: true,
     path: "/",
+  },
+  {
+    name: "menu/:id",
+    component: MenuItem,
+    exact: true,
+    path: "/menu/:id",
+    authType: "unAuthenticated",
+    redirectTo: "/menu/:id",
   },
 ];

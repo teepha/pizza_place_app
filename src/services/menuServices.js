@@ -10,4 +10,14 @@ const getAllMenu = async () =>
       return error;
     });
 
-export { getAllMenu };
+const getAMenu = async (id) =>
+  fetch(`http://localhost:9000/api/v1/menu/${id}`)
+    .then((res) => res.json())
+    .then((res) => {
+      return res.menu.menu;
+    })
+    .catch((error) => {
+      return error;
+    });
+
+export { getAllMenu, getAMenu };
