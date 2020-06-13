@@ -4,12 +4,12 @@ import { Card, Image } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import PizzaImage from "../../styles/images/bbq-beef.png";
 
-const mapProductsToItems = (products) =>
-  products.map(({ name, id, price }) => {
+const mapMenusToItems = (menus) =>
+  menus.map(({ name, id, price }) => {
     const formattedPrice = `$ ${price}.00`;
     return {
       as: Link,
-      to: `/product/${id}`,
+      to: `/menu/${id}`,
       childKey: id,
       image: (
         <Image
@@ -25,6 +25,6 @@ const mapProductsToItems = (products) =>
     };
   });
 
-export default ({ products }) => (
-  <Card.Group items={mapProductsToItems(products)} itemsPerRow={2} stackable />
+export default ({ menus }) => (
+  <Card.Group items={mapMenusToItems(menus)} itemsPerRow={2} stackable />
 );
