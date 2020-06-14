@@ -26,6 +26,7 @@ const MenuItem = lazyImport("menuItem");
 const Register = lazyImport("register");
 const LoginPage = lazyImport("login");
 const MyAccount = lazyImport("myaccount");
+const Cart = lazyImport("cart");
 
 export default [
   {
@@ -40,7 +41,6 @@ export default [
     exact: true,
     path: "/menu/:id",
     authType: "unAuthenticated",
-    redirectTo: "/menu/:id",
   },
   {
     name: "register",
@@ -48,7 +48,6 @@ export default [
     exact: true,
     path: "/register",
     authType: "unAuthenticated",
-    redirectTo: "/",
   },
   {
     name: "login",
@@ -56,7 +55,6 @@ export default [
     exact: true,
     path: "/logIn",
     authType: "unAuthenticated",
-    redirectTo: "/",
   },
   {
     name: "myaccount",
@@ -64,6 +62,12 @@ export default [
     exact: true,
     path: "/myaccount",
     authType: "authenticated",
-    redirectTo: "/login",
+  },
+  {
+    name: "cart",
+    component: Cart,
+    exact: true,
+    path: "/cart/",
+    authType: "authenticated",
   },
 ];
