@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import AuthContext from "./AuthContext";
 import { removeToken, getLocalStorageItem } from "../../utils/helpers";
 
 const AuthProvider = ({ children }) => {
+  let history = useHistory();
   const [token, setToken] = useState(null);
 
   const updateToken = () => setToken(getLocalStorageItem("customerToken"));
@@ -10,6 +12,7 @@ const AuthProvider = ({ children }) => {
   const signOut = () => {
     removeToken();
     setToken("");
+    history.push("/");
   };
 
   useEffect(() => {

@@ -1,9 +1,10 @@
 import React from "react";
 import { Item, Header, Divider, Image } from "semantic-ui-react";
+import AddToCart from "../AddToCart";
 import PizzaImage from "../../styles/images/bbq-beef.png";
 
 export default (menu) => {
-  const { name, description, price } = menu;
+  const { id, name, description, price } = menu;
   const formattedPrice = `$${price}.00`;
 
   return (
@@ -22,7 +23,9 @@ export default (menu) => {
           <Item.Description>
             <p>{formattedPrice}</p>
           </Item.Description>
-          
+          <Item.Extra>
+            <AddToCart menuId={id} />
+          </Item.Extra>
         </Item.Content>
       </Item>
 

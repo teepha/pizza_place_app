@@ -28,9 +28,7 @@ const LoginPage = (props) => {
         setLocalStorageItem("customerToken", token);
         setLocalStorageItem("mcustomer", id);
         updateToken();
-        history.push({
-          pathname: "/myaccount",
-        });
+        history.push("/myaccount");
       })
       .catch((e) => {
         setLoading(false);

@@ -34,9 +34,7 @@ const Register = ({ location }) => {
         setLocalStorageItem("customerToken", token);
         setLocalStorageItem("mcustomer", id);
         updateToken();
-        history.push({
-          pathname: "/myaccount",
-        });
+        history.push("/myaccount");
       })
       .catch((e) => {
         console.log(e);
