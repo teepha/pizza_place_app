@@ -1,14 +1,14 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
 import { Input, Icon, Transition } from "semantic-ui-react";
-import CartContext from "../Context/CartContext";
+import { getLocalStorageItem } from "../../utils/helpers";
 
 const AddToCart = ({ menuId }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [quantity, setQuantity] = useState(1);
-  // const [cartCount, setCartCount] = useState(0);
   const [visible, setVisible] = useState(false);
-  // const { addToCart } = useContext(CartContext);
+  let history = useHistory();
 
   const toggleMessage = () => {
     setTimeout(() => {
@@ -28,6 +28,10 @@ const AddToCart = ({ menuId }) => {
 
   const handleSubmit = async () => {
     const error = validate(quantity);
+    const token = getLocalStorageItem("customerToken");
+    if (!token) {
+      return history.push("/login/");
+    }
 
     if (!error) {
       setLoading(true);
