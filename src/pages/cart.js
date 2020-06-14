@@ -4,6 +4,7 @@ import CartItemList from "../components/CartItemList";
 // import CartSummary from "../components/CartSummary";
 import CartContext from "../components/Context/CartContext";
 import Layout from "../components/Layout";
+import { getCartItems } from "../services/menuServices";
 
 // const Moltin = require("../lib/moltin");
 
@@ -17,8 +18,12 @@ const Cart = ({ location }) => {
 
   async function getCartItems() {
     // const cartIdLocal = await localStorage.getItem("mcart");
-    const cartItems = await localStorage.getItem("cartItems");
-    console.log(">>>>CART", cartItems)
+    // const cartItems = localStorage.getItem("cartItems");
+    // const cartData = await getCartItems(cartItems);
+    // console.log(">>>>CART", cartData);
+
+    // setItems(cartData);
+
     // await Moltin.getCartItems(cartIdLocal).then(({ data, meta }) => {
     //   setItems(data);
     //   setCartId(cartIdLocal);

@@ -38,10 +38,7 @@ const AddToCart = ({ menuId }) => {
 
       let currentCartItems =
         JSON.parse(localStorage.getItem("cartItems")) || [];
-      currentCartItems.push({
-        menuId,
-        quantity: parseInt(quantity),
-      });
+      currentCartItems.push(menuId);
       localStorage.setItem("cartItems", JSON.stringify(currentCartItems));
 
       localStorage.setItem(
