@@ -1,92 +1,98 @@
 /* eslint-disable camelcase */
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import CartItemList from "../components/CartItemList";
 // import CartSummary from "../components/CartSummary";
-import CartContext from "../components/Context/CartContext";
 import Layout from "../components/Layout";
-import { getCartItems } from "../services/menuServices";
+import { cartMenuItems } from "../services/menuServices";
 
-// const Moltin = require("../lib/moltin");
-
-const Cart = ({ location }) => {
+const Cart = ({ location, history }) => {
   const [loading, setLoading] = useState(true);
   const [items, setItems] = useState([]);
+  const [itemToRemove, setItemToRemove] = useState();
   const [completed, setCompleted] = useState(false);
-  const [meta, setMeta] = useState({});
-  const [cartId, setCartId] = useState({});
-  const { updateCartCount } = useContext(CartContext);
-
-  async function getCartItems() {
-    // const cartIdLocal = await localStorage.getItem("mcart");
-    // const cartItems = localStorage.getItem("cartItems");
-    // const cartData = await getCartItems(cartItems);
-    // console.log(">>>>CART", cartData);
-
-    // setItems(cartData);
-
-    // await Moltin.getCartItems(cartIdLocal).then(({ data, meta }) => {
-    //   setItems(data);
-    //   setCartId(cartIdLocal);
-    //   setMeta(meta);
-    //   setLoading(false);
-    // });
+  const token = localStorage.getItem("customerToken");
+  if (!token) {
+    history.push("/login/");
   }
 
-  useEffect(() => {
-    getCartItems();
-  }, []);
-
-  const handleCheckout = async (data) => {
-    const cartId = await localStorage.getItem("mcart");
-    const customerId = localStorage.getItem("mcustomer");
-
-    const {
-      id: token,
-      email,
-      card: {
-        name,
-        address_line1: line_1,
-        address_city: city,
-        address_country: country,
-        address_state: county,
-        address_zip: postcode,
-      },
-    } = data;
-
-    const customer = customerId || { name, email };
-
-    const address = {
-      first_name: name.split(" ")[0],
-      last_name: name.split(" ")[1] || "",
-      line_1,
-      city,
-      county: county || "",
-      country,
-      postcode,
-    };
-
-    try {
-      // const {
-      //   data: { id },
-      // } = await Moltin.checkoutCart(cartId, customer, address);
-      // await Moltin.payForOrder(id, token, email);
-      setCompleted(true);
-      updateCartCount(0, cartId);
-    } catch (e) {
-      console.log(e);
+  const getCart = async (cartItemsIds) => {
+    if (cartItemsIds.length) {
+      const cartData = await cartMenuItems(cartItemsIds);
+      setLoading(false);
+      setItems(cartData);
     }
   };
 
+  useEffect(() => {
+    const parsedCartItemsIds = localStorage.menuIds
+      ? JSON.parse(localStorage.getItem("menuIds"))
+      : [];
+
+    getCart(parsedCartItemsIds);
+
+    if (items.length && !parsedCartItemsIds.length) {
+      setItems([]);
+
+      const cartItemsQuantity = JSON.parse(localStorage.getItem("cartItems"));
+      items.map((item) => {
+        const itemQuantity = cartItemsQuantity.find(
+          (cartItem) => cartItem.menuId === item.id
+        );
+        item.quantity = itemQuantity.quantity;
+        return item;
+      });
+    }
+  }, []);
+
+  useEffect(() => {
+    if (itemToRemove) {
+      const truncatedItems = items.filter((item) => item.id !== itemToRemove);
+      setItems(truncatedItems);
+      setItemToRemove(null);
+    }
+  }, [itemToRemove]);
+
   const handleRemoveFromCart = (itemId) => {
-    // Moltin.removeFromCart(itemId, cartId).then(({ data, meta }) => {
-    //   const total = data.reduce((a, c) => a + c.quantity, 0);
-    //   updateCartCount(total, cartId);
-    //   setItems(data);
-    //   setMeta(meta);
-    // });
+    const currentCartItems = JSON.parse(localStorage.getItem("cartItems"));
+    let cartMenuIds = JSON.parse(localStorage.getItem("menuIds"));
+    let index = currentCartItems.findIndex((item) => item.id === itemId);
+    currentCartItems.splice(index, 1);
+    cartMenuIds.splice(index, 1);
+
+    localStorage.setItem("cartItems", JSON.stringify(currentCartItems));
+    localStorage.setItem("menuIds", JSON.stringify(cartMenuIds));
+
+    setItemToRemove(itemId);
   };
 
-  const rest = { completed, items, loading, cartId };
+  // const handleCheckout = async (data) => {
+  //   const cartItemsIds = JSON.parse(localStorage.getItem("menuIds"));
+
+  //   useEffect(() => {
+  //     const placeOrder = async () => {
+  //       const cartData = await cartMenuItems({
+  //         cartItemsIds,
+  //         name,
+  //         surname,
+  //         address,
+  //         phone_number
+  //       });
+  //       setItems(cartData);
+  //       setLoading(false);
+  //     };
+
+  //     placeOrder();
+  //   }, []);
+
+  //   try {
+  //     setCompleted(true);
+  //     updateCartCount(0, cartId);
+  //   } catch (e) {
+  //     console.log(e);
+  //   }
+  // };
+
+  const rest = { items, completed, loading };
 
   return (
     <Layout location={location}>

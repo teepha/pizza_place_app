@@ -1,5 +1,6 @@
 import { lazy } from "react";
 import { isLocalhost } from "../serviceWorker";
+import Home from "../pages/home";
 
 const lazyImport = (filePath) =>
   lazy(() =>
@@ -21,7 +22,6 @@ const lazyImport = (filePath) =>
       })
   );
 
-const Home = lazyImport("home");
 const MenuItem = lazyImport("menuItem");
 const Register = lazyImport("register");
 const LoginPage = lazyImport("login");

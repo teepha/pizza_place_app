@@ -3,6 +3,7 @@ import React from "react";
 import { Card, Image } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import PizzaImage from "../../styles/images/bbq-beef.png";
+import { capitalize } from "../../utils/helpers";
 
 const mapMenusToItems = (menus) =>
   menus.map(({ name, id, price }) => {
@@ -10,7 +11,7 @@ const mapMenusToItems = (menus) =>
     return {
       as: Link,
       to: `/menu/${id}`,
-      childKey: id,
+      key: id,
       image: (
         <Image
           src={PizzaImage}
@@ -18,7 +19,7 @@ const mapMenusToItems = (menus) =>
           alt={name}
         />
       ),
-      header: name,
+      header: capitalize(name),
       meta: (
         <Card.Meta style={{ color: "dimgray" }}>{formattedPrice}</Card.Meta>
       ),

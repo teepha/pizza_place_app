@@ -8,7 +8,7 @@ const CartProvider = ({ children }) => {
   const [cartCount, setCartCount] = useState(0);
 
   const addToCart = (quantity, cartId) => {
-    const cartCountResult = Number(cartCount) + Number(quantity);
+    const cartCountResult = Number(cartCount);
     setLocalStorageItem(
       "mdata",
       JSON.stringify({ cartId, cartCount: cartCountResult })

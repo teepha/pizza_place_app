@@ -1,10 +1,12 @@
 /* eslint-disable camelcase */
 import React from "react";
 import { Link } from "react-router-dom";
-import { Item, Button, Loader, Message, Responsive } from "semantic-ui-react";
+import { Item, Button, Message, Responsive, Loader } from "semantic-ui-react";
+import PizzaImage from "../../styles/images/bbq-beef.png";
+import { capitalize } from "../../utils/helpers";
 
-export default ({ items, removeFromCart, loading, completed }) => {
-  // if (loading) return <Loader active inline="centered" />;
+export default ({ items, loading, removeFromCart, completed }) => {
+  if (loading) return <Loader active inline="centered" />;
 
   if (completed)
     return (
@@ -24,13 +26,13 @@ export default ({ items, removeFromCart, loading, completed }) => {
       </Message>
     );
   const mapCartItemsToItems = (items) =>
-    items.map(({ id, product_id, name, quantity, meta, image }) => {
-      const price = meta.display_price.with_tax.unit.formatted || "";
-      const imageUrl = image.href || "/static/moltin-light-hex.svg";
+    items.map(({ id, price, name, quantity, description }) => {
+      console.log(quantity);
+      const formattedPrice = `$${price}.00`;
 
       const DesktopItemImage = () => (
         <Item.Image
-          src={imageUrl}
+          src={PizzaImage}
           alt={name}
           size="small"
           style={{ background: "#f2f2f2" }}
@@ -38,7 +40,7 @@ export default ({ items, removeFromCart, loading, completed }) => {
       );
       const MobileItemImage = () => (
         <Item.Image
-          src={imageUrl}
+          src={PizzaImage}
           alt={name}
           size="small"
           style={{ background: "none" }}
@@ -49,7 +51,7 @@ export default ({ items, removeFromCart, loading, completed }) => {
         childKey: id,
         header: (
           <Item.Header>
-            <Link to={`/product/${product_id}/`}>{name}</Link>
+            <Link to={`/menu/${id}/`}>{name && capitalize(name)}</Link>
           </Item.Header>
         ),
         image: (
@@ -61,8 +63,8 @@ export default ({ items, removeFromCart, loading, completed }) => {
             />
           </React.Fragment>
         ),
-        meta: `${quantity}x ${price}`,
-        description: "Some more information goes here....",
+        meta: `${quantity}x ${formattedPrice}`,
+        description: `${description}`,
         extra: (
           <Button
             basic

@@ -12,6 +12,7 @@ const AuthProvider = ({ children }) => {
   const signOut = () => {
     removeToken();
     setToken("");
+    localStorage.clear();
     history.push("/");
   };
 

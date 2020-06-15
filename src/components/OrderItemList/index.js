@@ -2,14 +2,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Header, Loader, Message, Label, Segment } from "semantic-ui-react";
+import { capitalize } from "../../utils/helpers";
 
 export default ({ orders, loading }) => {
-  function capitalizeFirstLetter(string) {
-    return string.charAt(0).toUpperCase() + string.slice(1);
-  }
-
   if (loading) return <Loader active inline="centered" />;
-  if (orders.length ===0) {
+  if (orders.length === 0) {
     return (
       <Message warning>
         <Message.Header>No recent orders</Message.Header>
@@ -50,13 +47,13 @@ export default ({ orders, loading }) => {
                 <Header as="h4">Billing address:</Header>
                 <p>
                   <strong>First name: </strong>
-                  {capitalizeFirstLetter(name)}
+                  {capitalize(name)}
                   <br />
                   <strong>Last name: </strong>
-                  {capitalizeFirstLetter(surname)}
+                  {capitalize(surname)}
                   <br />
                   <strong>Address: </strong>
-                  {capitalizeFirstLetter(address)}
+                  {capitalize(address)}
                   <br />
                   <strong>Phone Number: </strong>
                   {phone_number}

@@ -36,10 +36,26 @@ const AddToCart = ({ menuId }) => {
     if (!error) {
       setLoading(true);
 
+      let cartMenuIds = JSON.parse(localStorage.getItem("menuIds")) || [];
       let currentCartItems =
         JSON.parse(localStorage.getItem("cartItems")) || [];
-      currentCartItems.push(menuId);
-      localStorage.setItem("cartItems", JSON.stringify(currentCartItems));
+
+      const itemIndex = currentCartItems.findIndex(
+        (item) => item.menuId === menuId
+      );
+
+      if (cartMenuIds.length && itemIndex > -1) {
+        let currentQuantity =
+          parseInt(currentCartItems[itemIndex].quantity) + parseInt(quantity);
+        currentCartItems.splice(itemIndex, 1);
+        currentCartItems.push({ menuId, quantity: currentQuantity });
+        localStorage.setItem("cartItems", JSON.stringify(currentCartItems));
+      } else {
+        cartMenuIds.push(menuId);
+        localStorage.setItem("menuIds", JSON.stringify(cartMenuIds));
+        currentCartItems.push({ menuId, quantity: parseInt(quantity) });
+        localStorage.setItem("cartItems", JSON.stringify(currentCartItems));
+      }
 
       localStorage.setItem(
         "cartCount",

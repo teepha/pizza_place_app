@@ -20,20 +20,21 @@ const getAMenu = async (id) =>
       return error;
     });
 
-const cartMenuItems = async (menuIds) =>
-  fetch(`${BASEURL}/api/v1/menu/acrt`, {
+const cartMenuItems = async (menuIds) => {
+  return fetch(`${BASEURL}/api/v1/menu/cart`, {
     method: "post",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
-      menuIds,
+      menuIds: menuIds,
     }),
   })
     .then((res) => res.json())
     .then((res) => {
-      return res.menu.menu;
+      return res.menu.menus;
     })
     .catch((error) => {
       return error;
     });
+};
 
 export { getAllMenu, getAMenu, cartMenuItems };

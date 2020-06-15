@@ -2,6 +2,7 @@ import React from "react";
 import { Item, Header, Divider, Image } from "semantic-ui-react";
 import AddToCart from "../AddToCart";
 import PizzaImage from "../../styles/images/bbq-beef.png";
+import { capitalize } from "../../utils/helpers";
 
 export default (menu) => {
   const { id, name, description, price } = menu;
@@ -19,7 +20,7 @@ export default (menu) => {
           />
         </Item.Image>
         <Item.Content>
-          <Item.Header>{name}</Item.Header>
+          <Item.Header>{name && capitalize(name)}</Item.Header>
           <Item.Description>
             <p>{formattedPrice}</p>
           </Item.Description>
