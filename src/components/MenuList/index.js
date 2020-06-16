@@ -3,9 +3,10 @@ import React from "react";
 import { Card, Image,Loader } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import PizzaImage from "../../styles/images/bbq-beef.png";
-import { capitalize } from "../../utils/helpers";
+import { capitalize, dollarsToEuros } from "../../utils/helpers";
 
 const mapMenusToItems = (menus) =>
+// { `$${totalPrice}` } ({ dollarsToEuros(totalPrice) })
   menus.map(({ name, id, price }) => {
     return {
       as: Link,
@@ -19,7 +20,7 @@ const mapMenusToItems = (menus) =>
         />
       ),
       header: capitalize(name),
-      meta: <Card.Meta style={{ color: "dimgray" }}>{`$ ${price}`}</Card.Meta>,
+      meta: <Card.Meta style={{ color: "dimgray" }}>{`$${price}`} ({dollarsToEuros(price)})</Card.Meta>,
     };
   });
 

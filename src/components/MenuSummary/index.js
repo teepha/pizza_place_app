@@ -1,10 +1,17 @@
 import React from "react";
-import { Item, Header, Divider, Image, Segment, Loader } from "semantic-ui-react";
+import {
+  Item,
+  Header,
+  Divider,
+  Image,
+  Segment,
+  Loader,
+} from "semantic-ui-react";
 import AddToCart from "../AddToCart";
 import PizzaImage from "../../styles/images/bbq-beef.png";
-import { capitalize } from "../../utils/helpers";
+import { capitalize, dollarsToEuros } from "../../utils/helpers";
 
-export default ({menu, loading}) => {
+export default ({ menu, loading }) => {
   const { id, name, description, price } = menu;
   if (loading) return <Loader active inline="centered" />;
 
@@ -22,7 +29,9 @@ export default ({menu, loading}) => {
         <Item.Content>
           <Item.Header>{name && capitalize(name)}</Item.Header>
           <Item.Description>
-            <p>{`$${price}`}</p>
+            <p>
+              {`$${price}`} ({dollarsToEuros(price)})
+            </p>
           </Item.Description>
           <Item.Extra>
             <AddToCart menuId={id} />

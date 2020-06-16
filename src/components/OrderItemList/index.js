@@ -35,7 +35,7 @@ export default ({ orders, loading }) => {
             <Grid>
               <Grid.Column floated="left" width={5}>
                 <div>
-                  <Header>Order Number: {order.id}</Header>
+                  <Header>Order ID: {order.id}</Header>
                   <p>Placed on {dateFormatter(order.createdAt)}</p>
                 </div>
                 <p>Delivered on {dateFormatter(order.updatedAt)}</p>

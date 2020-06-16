@@ -74,7 +74,7 @@ export default ({ location, match, history }) => {
                   <Header>{capitalize(menu.name)}</Header>
                   <p>Description: {menu.description}</p>
                   <p>Quantity: {menu.menuOrders.quantity}</p>
-                  <p>Price: {menu.menuOrders.price}</p>
+                  <p>Price: ${menu.menuOrders.price}</p>
                 </Grid.Column>
               </Grid>
             ))}

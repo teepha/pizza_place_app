@@ -15,7 +15,8 @@ const MyAccount = ({ location, history }) => {
     }
     const getOrders = async () => {
       const orderHistory = await getOrderHistory();
-      setOrders(orderHistory);
+      const sortedOrders = orderHistory.sort((a, b) => a.createdAt - b.createdAt).reverse()
+      setOrders(sortedOrders);
       setLoading(false);
     };
     getOrders();
