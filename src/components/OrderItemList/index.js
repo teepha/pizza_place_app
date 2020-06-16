@@ -25,7 +25,7 @@ export default ({ orders, loading }) => {
       {orders.map((order) => {
         console.log(">>>>ORDER>", order);
         const { id, name, surname, address, phone_number, menus } = order;
-        // const completed = true;
+        const completed = true;
         // const itemName = menus[0].name;
         // const itemDescription = menus[0].description;
         // const quantity = menus[0].menuOrders.quantity;
