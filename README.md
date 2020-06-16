@@ -1,4 +1,4 @@
-# Pizza_place API
+# Pizza_place APP
 
 ## Introduction
 
