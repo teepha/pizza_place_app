@@ -1,21 +1,12 @@
 /* eslint-disable camelcase */
 import React from "react";
 import { Link } from "react-router-dom";
-import { Item, Button, Message, Responsive, Loader } from "semantic-ui-react";
+import { Item, Button, Message, Responsive } from "semantic-ui-react";
 import PizzaImage from "../../styles/images/bbq-beef.png";
 import { capitalize } from "../../utils/helpers";
+import CartSummary from "../CartSummary";
 
-export default ({ items, loading, removeFromCart, completed }) => {
-  if (loading) return <Loader active inline="centered" />;
-
-  if (completed)
-    return (
-      <Message success>
-        <Message.Header>Order placed!</Message.Header>
-        <p>Congratulations. Your order and payment has been accepted.</p>
-      </Message>
-    );
-
+export default ({ items, loading, removeFromCart }) => {
   if (items.length === 0)
     return (
       <Message warning>
@@ -25,9 +16,18 @@ export default ({ items, loading, removeFromCart, completed }) => {
         </p>
       </Message>
     );
+
+  let totalPrice = 0;
   const mapCartItemsToItems = (items) =>
-    items.map(({ id, price, name, quantity, description }) => {
-      console.log(quantity);
+    items.map(({ id, price, name, description }) => {
+      const cartItemsQuantity = JSON.parse(localStorage.getItem("cartItems"));
+      const itemQuantity = cartItemsQuantity.find(
+        (cartItem) => cartItem.menuId === id
+      );
+      let quantity = itemQuantity && itemQuantity.quantity;
+      let subTotal = quantity * price;
+      totalPrice += subTotal;
+
       const formattedPrice = `$${price}.00`;
 
       const DesktopItemImage = () => (
@@ -75,5 +75,13 @@ export default ({ items, loading, removeFromCart, completed }) => {
         ),
       };
     });
-  return <Item.Group divided items={mapCartItemsToItems(items)} />;
+
+  return (
+    <div>
+      <Item.Group divided items={mapCartItemsToItems(items)} />
+      {!loading && (
+        <CartSummary totalPrice={totalPrice} />
+      )}
+    </div>
+  );
 };

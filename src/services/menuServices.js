@@ -25,7 +25,7 @@ const cartMenuItems = async (menuIds) => {
     method: "post",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
-      menuIds: menuIds,
+      menuIds,
     }),
   })
     .then((res) => res.json())

@@ -115,7 +115,7 @@ export default Register;
 const validate = (values) => {
   const errors = {};
   if (!values.username) {
-    errors.username = "Username address is required";
+    errors.username = "Username is required";
   }
   if (!values.password) {
     errors.password = "Password is required";

@@ -17,4 +17,23 @@ const getOrderHistory = async () => {
     });
 };
 
-export { getOrderHistory };
+const createOrder = async (data) =>
+  fetch(`${BASEURL}/api/v1/orders`, {
+    method: "post",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: getLocalStorageItem("customerToken"),
+    },
+    body: JSON.stringify({
+      ...data,
+    }),
+  })
+    .then((res) => res.json())
+    .then((res) => {
+      return res.message;
+    })
+    .catch((error) => {
+      return error;
+    });
+
+export { getOrderHistory, createOrder };

@@ -9,8 +9,8 @@ const Cart = ({ location, history }) => {
   const [loading, setLoading] = useState(true);
   const [items, setItems] = useState([]);
   const [itemToRemove, setItemToRemove] = useState();
-  const [completed, setCompleted] = useState(false);
   const token = localStorage.getItem("customerToken");
+
   if (!token) {
     history.push("/login/");
   }
@@ -32,15 +32,6 @@ const Cart = ({ location, history }) => {
 
     if (items.length && !parsedCartItemsIds.length) {
       setItems([]);
-
-      const cartItemsQuantity = JSON.parse(localStorage.getItem("cartItems"));
-      items.map((item) => {
-        const itemQuantity = cartItemsQuantity.find(
-          (cartItem) => cartItem.menuId === item.id
-        );
-        item.quantity = itemQuantity.quantity;
-        return item;
-      });
     }
   }, []);
 
@@ -65,34 +56,7 @@ const Cart = ({ location, history }) => {
     setItemToRemove(itemId);
   };
 
-  // const handleCheckout = async (data) => {
-  //   const cartItemsIds = JSON.parse(localStorage.getItem("menuIds"));
-
-  //   useEffect(() => {
-  //     const placeOrder = async () => {
-  //       const cartData = await cartMenuItems({
-  //         cartItemsIds,
-  //         name,
-  //         surname,
-  //         address,
-  //         phone_number
-  //       });
-  //       setItems(cartData);
-  //       setLoading(false);
-  //     };
-
-  //     placeOrder();
-  //   }, []);
-
-  //   try {
-  //     setCompleted(true);
-  //     updateCartCount(0, cartId);
-  //   } catch (e) {
-  //     console.log(e);
-  //   }
-  // };
-
-  const rest = { items, completed, loading };
+  const rest = { items, loading };
 
   return (
     <Layout location={location}>
@@ -100,9 +64,6 @@ const Cart = ({ location, history }) => {
         {...rest}
         removeFromCart={(item) => handleRemoveFromCart(item)}
       />
-      {/**{!loading && !completed && (
-        <CartSummary {...meta} handleCheckout={handleCheckout} />
-      )}*/}
     </Layout>
   );
 };
