@@ -1,13 +1,12 @@
 /* eslint-disable camelcase */
 import React from "react";
-import { Card, Image } from "semantic-ui-react";
+import { Card, Image,Loader } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import PizzaImage from "../../styles/images/bbq-beef.png";
 import { capitalize } from "../../utils/helpers";
 
 const mapMenusToItems = (menus) =>
   menus.map(({ name, id, price }) => {
-    const formattedPrice = `$ ${price}.00`;
     return {
       as: Link,
       to: `/menu/${id}`,
@@ -20,12 +19,18 @@ const mapMenusToItems = (menus) =>
         />
       ),
       header: capitalize(name),
-      meta: (
-        <Card.Meta style={{ color: "dimgray" }}>{formattedPrice}</Card.Meta>
-      ),
+      meta: <Card.Meta style={{ color: "dimgray" }}>{`$ ${price}`}</Card.Meta>,
     };
   });
 
-export default ({ menus }) => (
-  <Card.Group items={mapMenusToItems(menus)} itemsPerRow={2} stackable />
-);
+export default ({ menus, loading }) => {
+   if (loading) return <Loader active inline="centered" />;
+  return (
+    <Card.Group
+      loading={loading}
+      items={mapMenusToItems(menus)}
+      itemsPerRow={2}
+      stackable
+    />
+  );
+};

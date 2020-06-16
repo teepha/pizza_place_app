@@ -21,10 +21,10 @@ export default ({ totalPrice }) => {
   const deliveryFee = 5.0;
 
   const formCheckout = async () => {
-    const cartItemsIds = JSON.parse(localStorage.getItem("menuIds"));
+    const cartItems = JSON.parse(localStorage.getItem("cartItems"));
 
     await createOrder({
-      items: cartItemsIds,
+      items: cartItems,
       name: values.name,
       surname: values.surname,
       address: values.address,
@@ -64,18 +64,18 @@ export default ({ totalPrice }) => {
       <Segment>
         <div>
           <strong>Sub Total: </strong>
-          {`$${totalPrice}.00`} ({dollarsToEuros(totalPrice)})
+          {`$${totalPrice}`} ({dollarsToEuros(totalPrice)})
         </div>
         <div>
           <strong>Delivery Fee: </strong>
-          {`$${deliveryFee}.00`} ({dollarsToEuros(deliveryFee)})
+          {`$${deliveryFee}`} ({dollarsToEuros(deliveryFee)})
         </div>
       </Segment>
       <Divider />
       <Segment clearing size="large">
         <span>
           <strong>Total Price: </strong>
-          {`$${totalPrice + deliveryFee}.00`} (
+          {`$${totalPrice + deliveryFee}`} (
           {dollarsToEuros(totalPrice + deliveryFee)})
         </span>
 
@@ -92,7 +92,7 @@ export default ({ totalPrice }) => {
               {apiError.length !== 0 ? handleErrors(errors) : null}
               <Segment id="submit-order">
                 <Form.Field id="Form-something">
-                  <label htmlFor="name">Name</label>
+                  <label htmlFor="name">First Name</label>
                   <Input
                     id="name"
                     fluid

@@ -1,6 +1,7 @@
 import { lazy } from "react";
 import { isLocalhost } from "../serviceWorker";
 import Home from "../pages/home";
+import OrderItems from "../components/OrderItem"
 
 const lazyImport = (filePath) =>
   lazy(() =>
@@ -68,6 +69,13 @@ export default [
     component: Cart,
     exact: true,
     path: "/cart/",
+    authType: "authenticated",
+  },
+  {
+    name: "items",
+    component: OrderItems,
+    exact: true,
+    path: "/orders/:id",
     authType: "authenticated",
   },
 ];

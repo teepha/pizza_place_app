@@ -1,12 +1,13 @@
 /* eslint-disable camelcase */
 import React from "react";
 import { Link } from "react-router-dom";
-import { Item, Button, Message, Responsive } from "semantic-ui-react";
+import { Item, Button, Message, Responsive, Loader } from "semantic-ui-react";
 import PizzaImage from "../../styles/images/bbq-beef.png";
 import { capitalize } from "../../utils/helpers";
 import CartSummary from "../CartSummary";
 
 export default ({ items, loading, removeFromCart }) => {
+  if (loading) return <Loader active inline="centered" />;
   if (items.length === 0)
     return (
       <Message warning>
@@ -22,13 +23,11 @@ export default ({ items, loading, removeFromCart }) => {
     items.map(({ id, price, name, description }) => {
       const cartItemsQuantity = JSON.parse(localStorage.getItem("cartItems"));
       const itemQuantity = cartItemsQuantity.find(
-        (cartItem) => cartItem.menuId === id
+        (cartItem) => cartItem.id === id
       );
       let quantity = itemQuantity && itemQuantity.quantity;
       let subTotal = quantity * price;
       totalPrice += subTotal;
-
-      const formattedPrice = `$${price}.00`;
 
       const DesktopItemImage = () => (
         <Item.Image
@@ -63,7 +62,7 @@ export default ({ items, loading, removeFromCart }) => {
             />
           </React.Fragment>
         ),
-        meta: `${quantity}x ${formattedPrice}`,
+        meta: `${quantity}x $${price}`,
         description: `${description}`,
         extra: (
           <Button

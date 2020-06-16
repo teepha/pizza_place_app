@@ -17,6 +17,23 @@ const getOrderHistory = async () => {
     });
 };
 
+const getOrderItems = async (id) => {
+  return fetch(`${BASEURL}/api/v1/orders/${id}`, {
+    method: "get",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: getLocalStorageItem("customerToken"),
+    },
+  })
+    .then((res) => res.json())
+    .then((res) => {
+      return res.order.order;
+    })
+    .catch((error) => {
+      return error;
+    });
+};
+
 const createOrder = async (data) =>
   fetch(`${BASEURL}/api/v1/orders`, {
     method: "post",
@@ -36,4 +53,4 @@ const createOrder = async (data) =>
       return error;
     });
 
-export { getOrderHistory, createOrder };
+export { getOrderHistory, getOrderItems, createOrder };

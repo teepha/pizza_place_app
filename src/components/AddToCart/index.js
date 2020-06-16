@@ -41,19 +41,19 @@ const AddToCart = ({ menuId }) => {
         JSON.parse(localStorage.getItem("cartItems")) || [];
 
       const itemIndex = currentCartItems.findIndex(
-        (item) => item.menuId === menuId
+        (item) => item.id === menuId
       );
 
       if (cartMenuIds.length && itemIndex > -1) {
         let currentQuantity =
           parseInt(currentCartItems[itemIndex].quantity) + parseInt(quantity);
         currentCartItems.splice(itemIndex, 1);
-        currentCartItems.push({ menuId, quantity: currentQuantity });
+        currentCartItems.push({ id: menuId, quantity: currentQuantity });
         localStorage.setItem("cartItems", JSON.stringify(currentCartItems));
       } else {
         cartMenuIds.push(menuId);
         localStorage.setItem("menuIds", JSON.stringify(cartMenuIds));
-        currentCartItems.push({ menuId, quantity: parseInt(quantity) });
+        currentCartItems.push({ id: menuId, quantity: parseInt(quantity) });
         localStorage.setItem("cartItems", JSON.stringify(currentCartItems));
       }
 

@@ -1,12 +1,11 @@
 /* eslint-disable camelcase */
 import React, { useState, useEffect } from "react";
 import CartItemList from "../components/CartItemList";
-// import CartSummary from "../components/CartSummary";
 import Layout from "../components/Layout";
 import { cartMenuItems } from "../services/menuServices";
 
 const Cart = ({ location, history }) => {
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [items, setItems] = useState([]);
   const [itemToRemove, setItemToRemove] = useState();
   const token = localStorage.getItem("customerToken");
@@ -17,10 +16,11 @@ const Cart = ({ location, history }) => {
 
   const getCart = async (cartItemsIds) => {
     if (cartItemsIds.length) {
+      setLoading(true);
       const cartData = await cartMenuItems(cartItemsIds);
-      setLoading(false);
       setItems(cartData);
     }
+    setLoading(false);
   };
 
   useEffect(() => {
