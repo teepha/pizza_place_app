@@ -1,8 +1,10 @@
 /* eslint-disable camelcase */
 import React from "react";
 import { Link } from "react-router-dom";
-import { Header, Loader, Message, Label, Segment } from "semantic-ui-react";
-import { capitalize } from "../../utils/helpers";
+import { Header, Loader, Message, 
+  // Label, Segment
+ } from "semantic-ui-react";
+// import { capitalize } from "../../utils/helpers";
 
 export default ({ orders, loading }) => {
   if (loading) return <Loader active inline="centered" />;
@@ -24,8 +26,8 @@ export default ({ orders, loading }) => {
 
       {orders.map((order) => {
         console.log(">>>>ORDER>", order);
-        const { id, name, surname, address, phone_number, menus } = order;
-        const completed = true;
+        // const { id, name, surname, address, phone_number, menus } = order;
+        // const completed = true;
         // const itemName = menus[0].name;
         // const itemDescription = menus[0].description;
         // const quantity = menus[0].menuOrders.quantity;

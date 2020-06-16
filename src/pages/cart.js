@@ -33,7 +33,7 @@ const Cart = ({ location, history }) => {
     if (items.length && !parsedCartItemsIds.length) {
       setItems([]);
     }
-  }, []);
+  }, [items.length]);
 
   useEffect(() => {
     if (itemToRemove) {
@@ -41,7 +41,7 @@ const Cart = ({ location, history }) => {
       setItems(truncatedItems);
       setItemToRemove(null);
     }
-  }, [itemToRemove]);
+  }, [itemToRemove, items]);
 
   const handleRemoveFromCart = (itemId) => {
     const currentCartItems = JSON.parse(localStorage.getItem("cartItems"));

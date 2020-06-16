@@ -19,7 +19,7 @@ const MyAccount = ({ location, history }) => {
       setLoading(false);
     };
     getOrders();
-  }, []);
+  }, [history]);
 
   return (
     <Layout location={location}>
